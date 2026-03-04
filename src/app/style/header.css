@@ -1,0 +1,4 @@
+@import "tailwindcss";
+
+.navLink { @apply opacity-80  }
+.navLink.current { @apply font-bold opacity-100 }
