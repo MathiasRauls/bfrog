@@ -5,7 +5,7 @@
 export default function Home() {
 	return (
 		<>
-			<main className='' >
+			<main className="" >
 				{/* <p>Are we boiled chat?</p> */}
 			</main>
 		</>

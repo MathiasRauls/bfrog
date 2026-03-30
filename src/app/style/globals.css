@@ -1,47 +1,68 @@
 @import "tailwindcss";
 
 :root {
+	/* Palette */
+	--frog: #9fdf7c;
+	--frog-l: oklch(from var(--frog) clamp(0, l + 0.2, 1) calc(c * 0.9) h);
+	--fig: #e42535;
+	--cafe: #291f1e;
+	--vape: #ededed;
+	/* also black & white */
 
-  /* Palette */
-  --frog: #9FDF7C;
-  --frog-l: oklch(from var(--frog) clamp(0, l + 0.20, 1) calc(c * 0.9) h);
-  --fig: #E42535;
-  --cafe: #291F1E;
-  --vape: #ededed;
+	/* Theme Scheme */
+	--bg: var(--frog-l);
+	--fg: var(--cafe);
 
-  /* Theme Scheme */
-  --bg: var(--frog-l);
-  --fg: var(--cafe);
-  /* --dom: ;
-  --sec: ;
-  --acn: ; */
+	--dom: oklch(from var(--frog) l c h);
+	--dom-l: oklch(from var(--dom) clamp(0, l + 0.2, 1) calc(c * 0.9) h);
+	--dom-d: oklch(from var(--dom) clamp(0, l - 0.2, 1) calc(c * 0.92) h);
+	--sec: oklch(from var(--fig) l c h);
+	--sec-l: oklch(from var(--fig) clamp(0, l + 0.2, 1) calc(c * 0.9) h);
+	--sec-d: oklch(from var(--fig) clamp(0, l - 0.2, 1) calc(c * 0.92) h);
+	--acn: (from var(--vape) l c h);
+	--acn-l: oklch(from var(--vape) clamp(0, l + 0.2, 1) calc(c * 0.9) h);
+	--acn-d: oklch(from var(--vape) clamp(0, l - 0.2, 1) calc(c * 0.92) h);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --bg: var(--cafe);
     --fg: var(--vape);
   }
 }
 
-@variant dark (&:where(.dark, .dark *));
+@variant dark (&:where(.dark, .dark *)); */
 
 @theme inline {
-  --color-bg: var(--bg);
-  --color-fg: var(--fg);
+	--color-bg: var(--bg);
+	--color-fg: var(--fg);
 
-  --color-frog: var(--frog);
-  --color-fig: var(--fig);
-  --color-cafe: var(--cafe);
-  --color-vape: var(--vape);
+	--color-frog: var(--frog);
+	--color-fig: var(--fig);
+	--color-cafe: var(--cafe);
+	--color-cafe-l: oklch(from var(--cafe) clamp(0, l + 0.1, 1) calc(c * 0.9) h);
 
-  --font-decor: var(--font-pix);
-  --font-base: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+	--color-vape: var(--vape);
+
+	--color-dom: var(--dom);
+	--color-dom-l: var(--dom-l);
+	--color-dom-d: var(--dom-d);
+	--color-sec: var(--sec);
+	--color-sec-l: var(--sec-l);
+	--color-sec-d: var(--sec-d);
+	--color-acn: var(--acn);
+	--color-acn-l: var(--acn-l);
+	--color-acn-d: var(--acn-d);
+
+	--font-decor: var(--font-pix);
+	--font-base: var(--font-geist-sans);
+	--font-mono: var(--font-geist-mono);
 }
 
 body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: Arial, Helvetica, sans-serif;
+	background: var(--bg);
+	color: var(--fg);
+	font-family: Arial, Helvetica, sans-serif;
 }
+
+@utility themedCard { @apply bg-cafe rounded-3xl px-2 py-3 }

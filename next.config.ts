@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'your-cdn.com',
+        hostname: 'assets.coingecko.com',
       },
     ],
   },

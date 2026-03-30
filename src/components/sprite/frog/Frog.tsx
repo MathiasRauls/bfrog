@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from 'react';
-import frogGreen from '../../../img/sprite/frog-green.png'
+import { useEffect, useRef, useState } from "react";
+import frogGreen from "../../../img/sprite/frog-green.png"
 
 const ANIMATIONS: Record<string, { col: number; frames: number; fps?: number }> = {
 	idle: { col: 0, frames: 2, fps: 2 },
 	croak: { col: 1, frames: 3, fps: 3 },
-	jump: { col: 2, frames: 3, fps: 1.5 },
+	jump: { col: 2, frames: 3, fps: 4 },
 	pain: { col: 3, frames: 3, fps: 1.5 },
 	jig: { col: 4, frames: 3, fps: 4 },
 }
@@ -16,7 +16,7 @@ function getDuration(name: string) {
 	return (config.frames / (config.fps ?? 1.5)) * 1000
 }
 
-const DEFAULT_SEQ: string[] = ['croak', 'idle']
+const DEFAULT_SEQ: string[] = ["croak", "idle"]
 
 interface FrogSpriteProps {
 	scale?: number
@@ -29,7 +29,8 @@ const Frog = ({
 	seq = DEFAULT_SEQ,
 	idlePause = 1000
 }: FrogSpriteProps) => {
-	const [currentAnimation, setAnimation] = useState('idle')
+	const [click, setClick] = useState<boolean>(false)
+	const [currentAnimation, setAnimation] = useState<string>("idle")
 	const idx = useRef(0)
 
 	useEffect(() => {
@@ -40,12 +41,18 @@ const Frog = ({
 			const name = seq[idx.current % seq.length]
 			idx.current++
 
-			setAnimation(name)
+			if (!click) {
+				setAnimation(name)
 
-			timeout = setTimeout(() => {
-				setAnimation('idle')
-				timeout = setTimeout(playNext, idlePause)
-			}, getDuration(name))
+				timeout = setTimeout(() => {
+					setAnimation("idle")
+					timeout = setTimeout(playNext, idlePause)
+				}, getDuration(name))
+			} else {
+				setAnimation("jump")
+				setClick(false)
+			}
+
 		}
 
 		function playAnimation() {
@@ -64,7 +71,7 @@ const Frog = ({
 		}
 
 
-	}, [seq, idlePause])
+	}, [seq, idlePause, click])
 
 	const config = ANIMATIONS[currentAnimation]
 	const duration = (config.frames / (config.fps ?? 1.5)).toFixed(3)
@@ -78,16 +85,19 @@ const Frog = ({
 					to   { background-position: -${config.col * 32}px -${config.frames * 32}px; }
 				}
 			`}</style>
-			<div style={{ transform: `scale(${scale})`, display: 'inline-block' }}>
+			<div
+				style={{ transform: `scale(${scale})`, display: "inline-block", cursor: "pointer" }}
+				onClick={() => setClick(true)}
+			>
 				<div role="img"
 					title="Mr. Frog"
 					style={{
 						width: 32,
 						height: 32,
-						filter: 'saturate(125%)',
+						filter: "saturate(125%)",
 						backgroundImage: `url(${frogGreen.src})`,
-						backgroundSize: '256px auto',
-						imageRendering: 'pixelated',
+						backgroundSize: "256px auto",
+						imageRendering: "pixelated",
             			animation: `${keyframeName} ${duration}s steps(${config.frames}) infinite`,
 					}}
 				/>
